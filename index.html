@@ -5,10 +5,59 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Dynamic Programming</title>
 </head>
+<style type="text/css">
+	.answer{
+		display: none;
+		background: #121212;
+
+		width: 90%;
+	}
+
+	.comment{
+		color: tomato;
+	}
+
+	.answer > pre > code{
+		color: #f4f4f4;
+		font-weight: bold;
+		font-size: 16px;
+	}
+</style>
 <body>
 	<h1>Rob House</h1>
 	<h3> The House Robber problem is a classic dynamic programming problem where you are a robber planning to rob houses along a street. Each house has a certain amount of money stashed, but adjacent houses have a security system connected, so you cannot rob two adjacent houses. Your goal is to maximize the amount of money you can rob without alerting the security system.</h3>
+	<button class="showAnswer" id="robhouseanswer" onclick="toggle_answer">See Answer</button>
 
+	<div class="answer" id="robhouseAnswer">
+		<pre><code>
+	const rob_house = (houselist) =>{
+
+	 		<p class="comment">//This line checks if the input array houselist is empty. If it is empty, there are no houses to rob, so the function immediately returns 0.</p>
+	if(houselist.length === 0){
+		return 0;
+	}
+			<p class="comment">//This line initializes an empty array called dp which will be used to store the maximum amount of money that can be robbed at each house.</p>
+	const dp = [];
+
+	<p class="comment">//This line sets the value of the first element in dp to be equal to the value of the first house in houselist. This is because there is only one house, so the maximum amount that can be robbed is the value of that house.</p>
+	dp[0] = houselist[0];
+
+	<p class="comment">//This line sets the value of the second element in dp to be the maximum value between the first and second houses in houselist. This accounts for the scenario where there are two houses, and the robber should choose the one with the higher value.</p>
+	dp[1] = Math.max(houselist[0],houselist[1]);
+
+	<p class="comment">//This line starts a loop that iterates from the third house up to the last house in houselist.</p>
+	for (let i = 2; i < houselist.length; i++){
+		<p class="comment">//This line calculates the maximum amount that can be robbed at the current house i. It takes the maximum value between robbing the previous house dp[i-1] and skipping the current house, and robbing the current house along with the maximum value robbed two houses ago dp[i-2]. The robber chooses the higher value as the maximum amount at the current house.</p>
+		dp[i] = Math.max(dp[i - 1], dp[i - 2] + houselist[i]);
+	}
+
+	return dp[houselist.length - 1];
+	}
+
+	console.log("Answer",rob_house([2, 7, 9, 3, 1]));
+		</code> </pre>
+	</div>
+	<script type="text/javascript" src="app.js"></script>
 	<script type="text/javascript" src="robhouse.js"></script>
 </body>
 </html>
